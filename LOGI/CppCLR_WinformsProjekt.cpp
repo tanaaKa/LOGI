@@ -16,5 +16,6 @@ int main() {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 	Application::Run(gcnew LOGI::Form1()); 
+
 	return 0;
 }

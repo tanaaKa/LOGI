@@ -1,4 +1,6 @@
 #pragma once
+#include "Form2.h"
+//#include "windows.h"
 
 namespace LOGI {
 
@@ -11,31 +13,36 @@ namespace LOGI {
 
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
-	public:
-		Form1(void)
-		{
-			InitializeComponent();
-		}
+		// Create settings form (form2) and hide it on init
+		// This way we can grab their install dirs silently
+		Form2^ frm2 = gcnew Form2;
 
-	protected:
-
-		~Form1()
-		{
-			if (components)
+		public:
+			Form1(void)
 			{
-				delete components;
+				InitializeComponent();
 			}
-		}
-	private: System::Windows::Forms::ProgressBar^ pbBar;
-	protected:
-	private: System::Windows::Forms::Button^ bCheck;
-	private: System::Windows::Forms::ComboBox^ cbRepo;
-	private: System::Windows::Forms::Button^ bSettings;
 
-	private:
-		System::ComponentModel::Container ^components;
+		protected:
+			~Form1()
+			{
+				if (components)
+				{
+					delete components;
+				}
+			}
+		private: 
+			System::Windows::Forms::ProgressBar^ pbBar;
+		private: 
+			System::Windows::Forms::Button^ bCheck;
+		private: 
+			System::Windows::Forms::ComboBox^ cbRepo;
+		private: 
+			System::Windows::Forms::Button^ bSettings;
+		private:
+			System::ComponentModel::Container ^components;
 
-#pragma region Windows Form Designer generated code
+	#pragma region Windows Form Designer generated code
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Form1::typeid));
@@ -95,29 +102,48 @@ namespace LOGI {
 			this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
-			this->Name = L"Form1";
+			this->Name = L"LOGI";
 			this->Text = L"LOGI Launcher";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			this->ResumeLayout(false);
 
 		}
-#pragma endregion
-	private: 
-	System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) 
-	{
-		bCheck->Text = "CHECK MODS";			//Make sure 'check' is first
-		cbRepo->SelectedItem = "Session Repo";	//default repo
+	#pragma endregion
+		private: 
+		System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) 
+		{
+			bCheck->Text = "CHECK MODS";			//Make sure 'check' is first
+			cbRepo->SelectedItem = "Session Repo";	//default repo
 
-		// Create the settings form and hide it until called
+			// Create the settings form and hide it until called
+			frm2->Hide();
 
-	}
-	private: System::Void bCheck_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
+		}
+		// One click simplicity.
+		// Button flexes based on user need without their interaction
+		// Should check directories defined above in namespace
+		private: System::Void bCheck_Click(System::Object^ sender, System::EventArgs^ e) 
+		{
+			// Disable button after click
+			bCheck->Enabled = false;
 
-	}
-	private: System::Void bSettings_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		
-	}
-};
+			// Check the modpack
+			// Return true if download necessary
+			// download = modpackCheck();
+
+
+			// If download, change button to "DOWNLOAD", else "PLAY"
+			//bCheck->Text = "DOWNLOAD";
+			//bCheck->Enabled = true;
+
+
+
+			//bCheck->Text = "PLAY";
+			//serverMenu();
+		}
+		private: System::Void bSettings_Click(System::Object^ sender, System::EventArgs^ e) 
+		{
+			frm2->Show();
+		}
+	};
 }
