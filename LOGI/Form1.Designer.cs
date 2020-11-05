@@ -32,6 +32,7 @@
             this.pbBar = new System.Windows.Forms.ProgressBar();
             this.bCheck = new System.Windows.Forms.Button();
             this.bSettings = new System.Windows.Forms.Button();
+            this.cbRepo = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // pbBar
@@ -61,15 +62,27 @@
             this.bSettings.UseVisualStyleBackColor = true;
             this.bSettings.Click += new System.EventHandler(this.bSettings_Click);
             // 
+            // cbRepo
+            // 
+            this.cbRepo.FormattingEnabled = true;
+            this.cbRepo.Items.AddRange(new object[] {
+            "Session Repo"});
+            this.cbRepo.Location = new System.Drawing.Point(788, 412);
+            this.cbRepo.Name = "cbRepo";
+            this.cbRepo.Size = new System.Drawing.Size(133, 23);
+            this.cbRepo.TabIndex = 3;
+            // 
             // LOGI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(933, 519);
+            this.Controls.Add(this.cbRepo);
             this.Controls.Add(this.bSettings);
             this.Controls.Add(this.bCheck);
             this.Controls.Add(this.pbBar);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LOGI";
             this.Text = "LOGI Launcher";
             this.Load += new System.EventHandler(this.LOGI_Load);
@@ -82,6 +95,7 @@
         private System.Windows.Forms.ProgressBar pbBar;
         private System.Windows.Forms.Button bCheck;
         private System.Windows.Forms.Button bSettings;
+        private System.Windows.Forms.ComboBox cbRepo;
     }
 }
 
