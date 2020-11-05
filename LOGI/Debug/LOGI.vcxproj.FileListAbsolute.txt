@@ -1,0 +1,3 @@
+C:\Users\tanaKa\Documents\GitHub\LOGI\LOGI\Debug\LOGI.vcxprojAssemblyReference.cache
+C:\Users\tanaKa\Documents\GitHub\LOGI\LOGI\Debug\LOGI.Form1.resources
+C:\Users\tanaKa\Documents\GitHub\LOGI\LOGI\Debug\LOGI.vcxproj.GenerateResource.cache
