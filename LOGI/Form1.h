@@ -10,12 +10,12 @@ namespace LOGI {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace std;
 
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
 		// Create settings form (form2) and hide it on init
 		// This way we can grab their install dirs silently
-		Form2^ frm2 = gcnew Form2;
 
 		public:
 			Form1(void)
@@ -115,8 +115,8 @@ namespace LOGI {
 			bCheck->Text = "CHECK MODS";			//Make sure 'check' is first
 			cbRepo->SelectedItem = "Session Repo";	//default repo
 
-			// Create the settings form and hide it until called
-			frm2->Hide();
+			// Settings logic to find arma3 install dir
+
 
 		}
 		// One click simplicity.
@@ -143,7 +143,8 @@ namespace LOGI {
 		}
 		private: System::Void bSettings_Click(System::Object^ sender, System::EventArgs^ e) 
 		{
-			frm2->Show();
+			Form2^ frm2 = gcnew Form2;
+			frm2->Show(this);
 		}
 	};
 }

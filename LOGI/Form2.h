@@ -8,6 +8,7 @@ namespace LOGI {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace std;
 
 	public ref class Form2 : public System::Windows::Forms::Form
 	{
@@ -71,10 +72,17 @@ namespace LOGI {
 		}
 	#pragma endregion
 		private: 
+
+
 		System::Void Form2_Load(System::Object^ sender, System::EventArgs^ e) 
 		{
 			// Need to find arma3 dir
-			// EG. C:\Program Files (x86)\Steam\steamapps\common\107410
+			// Registry: Computer\HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3
+		}
+
+		System::Void Form2_FormClosing(System::Object^ sender, System::EventArgs^ e)
+		{
+			this->Hide();
 		}
 	};
 }
