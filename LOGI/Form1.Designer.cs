@@ -79,7 +79,8 @@
             // 
             // pbImage
             // 
-            this.pbImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pbImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbImage.Image = global::LOGI.Properties.Resources._1;
             this.pbImage.Location = new System.Drawing.Point(12, 12);
             this.pbImage.Name = "pbImage";
@@ -98,6 +99,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(933, 519);
             this.Controls.Add(this.pbImage);
             this.Controls.Add(this.cbRepo);

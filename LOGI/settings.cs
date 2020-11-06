@@ -15,9 +15,9 @@ namespace LOGI
     public partial class settings : Form
     {
         // Constants for default dirs
-        public string ARMADIR;
-        public string MODSDIR;
-        public string TEAMSPEAKDIR;
+        public static string ARMADIR;
+        public static string MODSDIR;
+        public static string TEAMSPEAKDIR;
 
         
 
