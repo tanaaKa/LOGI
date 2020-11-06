@@ -19,8 +19,6 @@ namespace LOGI
         public static string MODSDIR;
         public static string TEAMSPEAKDIR;
 
-        
-
         public settings()
         {
             InitializeComponent();

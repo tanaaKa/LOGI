@@ -29,6 +29,11 @@ namespace LOGI
 
         private void LOGI_Load(object sender, EventArgs e)
         {
+            // Get install directories on load
+            settings.ARMADIR = settings.getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main");
+            settings.MODSDIR = settings.ARMADIR + @"\COALITION";
+            settings.TEAMSPEAKDIR = settings.getInstallDir(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TeamSpeak 3 Client", "InstallLocation");
+
             // Defaults
             bCheck.Text = "CHECK MODS";
             cbRepo.Text = "Session Repo";
