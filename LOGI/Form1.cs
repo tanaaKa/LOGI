@@ -78,12 +78,15 @@ namespace LOGI
         {
             Console.WriteLine("check mods");
             DirectoryInfo di;
+            //settings.MODSDIR
             if (cbRepo.SelectedIndex == 0)
             {
                 //Check for 'session' folder in MODSDIR
-                di = Directory.GetDirectories(MODSDIR);
+                di = Directory.CreateDirectory(settings.MODSDIR);
+                Console.WriteLine(di.ToString());
                 //Get Repo online
                 string repoContent = new System.Net.WebClient().DownloadString(SESSION_REPO_LINK);
+                Console.WriteLine(repoContent);
             }//FUTURE add support for other repos
             //TODO check files
             //Open Arma Dir
