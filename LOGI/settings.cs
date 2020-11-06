@@ -83,7 +83,7 @@ namespace LOGI
 
         private void bReportIssue_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Not yet");
+            System.Diagnostics.Process.Start("https://github.com/tanaaKa/LOGI/issues");
         }
 
         private void bSearchArmaDir_Click(object sender, EventArgs e)
