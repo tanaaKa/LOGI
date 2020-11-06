@@ -89,19 +89,22 @@ namespace LOGI
         private void bSearchArmaDir_Click(object sender, EventArgs e)
         {
             // Set dir for arma manually if needed
-            tbArmaDir.Text = folderDialog(ARMADIR);
+            ARMADIR = folderDialog(ARMADIR).ToString();
+            tbArmaDir.Text = ARMADIR;
         }
 
         private void bSearchModsDir_Click(object sender, EventArgs e)
         {
             // Set dir for mods manually if needed
-            tbModsDir.Text = folderDialog(MODSDIR);
+            MODSDIR = folderDialog(MODSDIR).ToString();
+            tbModsDir.Text = MODSDIR;
         }
 
         private void bSearchTeamspeakDir_Click(object sender, EventArgs e)
         {
             // Set dir for teamspeak manually if needed
-            tbTeamspeakDir.Text = folderDialog(TEAMSPEAKDIR);
+            TEAMSPEAKDIR = folderDialog(TEAMSPEAKDIR).ToString();
+            tbTeamspeakDir.Text = TEAMSPEAKDIR;
         }
     }
 }
