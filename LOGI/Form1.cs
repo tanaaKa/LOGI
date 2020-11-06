@@ -81,7 +81,7 @@ namespace LOGI
             if (cbRepo.SelectedIndex == 0)
             {
                 //Check for 'session' folder in MODSDIR
-                di = Directory.GetDirectories(MODSDIR);
+                //di = Directory.GetDirectories(settings.MODSDIR);
                 //Get Repo online
                 string repoContent = new System.Net.WebClient().DownloadString(SESSION_REPO_LINK);
             }//FUTURE add support for other repos
