@@ -57,6 +57,7 @@ namespace LOGI
         private void bCheck_Click(object sender, EventArgs e)
         {
             bCheck.Enabled = false;
+            settings.getInstallDir();
 
             // Check mods logic here
             // download = checkMods();
