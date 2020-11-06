@@ -5,10 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 
 namespace LOGI
 {
@@ -18,6 +18,8 @@ namespace LOGI
         string logFile = Environment.GetEnvironmentVariable("LocalAppData") +  @"\LOGI\log.txt";
         string dir = Environment.GetEnvironmentVariable("LocalAppData") + @"\LOGI";
         private int imageNumber = 1;
+
+        public const string SESSION_REPO_LINK = "https://www.coalitiongroup.net/Repo/";
 
         public LOGI()
         {
@@ -65,10 +67,38 @@ namespace LOGI
             imageNumber++;
         }
 
+        /*
+         * Mods_Req_Update()
+         * Returns true if mods need update
+         * Reutrns false if no update is needed
+         * Writen by Shimavitz
+         * 11/6/2020
+         */
+        private Boolean Mods_Req_Update()
+        {
+            Console.WriteLine("check mods");
+            DirectoryInfo di;
+            if (cbRepo.SelectedIndex == 0)
+            {
+                //Check for 'session' folder in MODSDIR
+                di = Directory.GetDirectories(MODSDIR);
+                //Get Repo online
+                string repoContent = new System.Net.WebClient().DownloadString(SESSION_REPO_LINK);
+            }//FUTURE add support for other repos
+            //TODO check files
+            //Open Arma Dir
+            //need: selected item repo, mod/repo dir, connection repo online
+            //Connect to Repo
+            //Compare
+            //Return true if change found
+            //Maybe track each dir with changes???
+            return false;
+        }
+
         private void bCheck_Click(object sender, EventArgs e)
         {
             bCheck.Enabled = false;
-
+            Console.WriteLine(Mods_Req_Update());
             // Check mods logic here
             // download = checkMods();
             // if true, then:
