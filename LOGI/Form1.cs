@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -77,13 +78,18 @@ namespace LOGI
         private Boolean Mods_Req_Update()
         {
             Console.WriteLine("check mods");
-            DirectoryInfo di;
             if (cbRepo.SelectedIndex == 0)
             {
-                //Check for 'session' folder in MODSDIR
-                //di = Directory.GetDirectories(settings.MODSDIR);
                 //Get Repo online
                 string repoContent = new System.Net.WebClient().DownloadString(SESSION_REPO_LINK);
+                Regex rgx = new Regex(@"\"+"@.*"+"\"");
+                foreach (Match match in rgx.Matches(repoContent))
+                {
+                    //Console.WriteLine("Found '{0}' at position {1}", match.Value, match.Index);
+                    string path = @settings.MODSDIR + @"\" + @match.Value.Remove(match.Value.Length - 2) + @"\";
+                    Console.WriteLine("Path is '{0}'", path);
+                    Console.WriteLine(Directory.Exists(path));
+                }
             }//FUTURE add support for other repos
             //TODO check files
             //Open Arma Dir
