@@ -39,6 +39,7 @@
             this.bSearchModsDir = new System.Windows.Forms.Button();
             this.tbTeamspeakDir = new System.Windows.Forms.TextBox();
             this.bSearchTeamspeakDir = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -136,11 +137,22 @@
             this.bSearchTeamspeakDir.UseVisualStyleBackColor = true;
             this.bSearchTeamspeakDir.Click += new System.EventHandler(this.bSearchTeamspeakDir_Click);
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(298, 237);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(125, 50);
+            this.btnSave.TabIndex = 10;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 300);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.bSearchTeamspeakDir);
             this.Controls.Add(this.tbTeamspeakDir);
             this.Controls.Add(this.bSearchModsDir);
@@ -173,5 +185,6 @@
         private System.Windows.Forms.Button bSearchModsDir;
         private System.Windows.Forms.TextBox tbTeamspeakDir;
         private System.Windows.Forms.Button bSearchTeamspeakDir;
+        private System.Windows.Forms.Button btnSave;
     }
 }
