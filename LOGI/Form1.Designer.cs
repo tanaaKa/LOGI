@@ -28,11 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LOGI));
             this.pbBar = new System.Windows.Forms.ProgressBar();
             this.bCheck = new System.Windows.Forms.Button();
             this.bSettings = new System.Windows.Forms.Button();
             this.cbRepo = new System.Windows.Forms.ComboBox();
+            this.pbImage = new System.Windows.Forms.PictureBox();
+            this.sliderTimer = new System.Windows.Forms.Timer(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.pbImage)).BeginInit();
             this.SuspendLayout();
             // 
             // pbBar
@@ -44,9 +48,10 @@
             // 
             // bCheck
             // 
-            this.bCheck.Location = new System.Drawing.Point(788, 441);
+            this.bCheck.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.bCheck.Location = new System.Drawing.Point(762, 441);
             this.bCheck.Name = "bCheck";
-            this.bCheck.Size = new System.Drawing.Size(133, 66);
+            this.bCheck.Size = new System.Drawing.Size(159, 66);
             this.bCheck.TabIndex = 1;
             this.bCheck.Text = "CHECK MODS";
             this.bCheck.UseVisualStyleBackColor = true;
@@ -55,7 +60,7 @@
             // bSettings
             // 
             this.bSettings.Image = ((System.Drawing.Image)(resources.GetObject("bSettings.Image")));
-            this.bSettings.Location = new System.Drawing.Point(736, 474);
+            this.bSettings.Location = new System.Drawing.Point(710, 474);
             this.bSettings.Name = "bSettings";
             this.bSettings.Size = new System.Drawing.Size(46, 33);
             this.bSettings.TabIndex = 2;
@@ -67,16 +72,34 @@
             this.cbRepo.FormattingEnabled = true;
             this.cbRepo.Items.AddRange(new object[] {
             "Session Repo"});
-            this.cbRepo.Location = new System.Drawing.Point(788, 412);
+            this.cbRepo.Location = new System.Drawing.Point(762, 412);
             this.cbRepo.Name = "cbRepo";
-            this.cbRepo.Size = new System.Drawing.Size(133, 23);
+            this.cbRepo.Size = new System.Drawing.Size(159, 23);
             this.cbRepo.TabIndex = 3;
+            // 
+            // pbImage
+            // 
+            this.pbImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbImage.Image = global::LOGI.Properties.Resources._1;
+            this.pbImage.Location = new System.Drawing.Point(12, 12);
+            this.pbImage.Name = "pbImage";
+            this.pbImage.Size = new System.Drawing.Size(909, 382);
+            this.pbImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbImage.TabIndex = 4;
+            this.pbImage.TabStop = false;
+            // 
+            // sliderTimer
+            // 
+            this.sliderTimer.Enabled = true;
+            this.sliderTimer.Interval = 10000;
+            this.sliderTimer.Tick += new System.EventHandler(this.sliderTimer_Tick);
             // 
             // LOGI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(933, 519);
+            this.Controls.Add(this.pbImage);
             this.Controls.Add(this.cbRepo);
             this.Controls.Add(this.bSettings);
             this.Controls.Add(this.bCheck);
@@ -86,6 +109,7 @@
             this.Name = "LOGI";
             this.Text = "LOGI Launcher";
             this.Load += new System.EventHandler(this.LOGI_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pbImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -96,6 +120,8 @@
         private System.Windows.Forms.Button bCheck;
         private System.Windows.Forms.Button bSettings;
         private System.Windows.Forms.ComboBox cbRepo;
+        private System.Windows.Forms.PictureBox pbImage;
+        private System.Windows.Forms.Timer sliderTimer;
     }
 }
 

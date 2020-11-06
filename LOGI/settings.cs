@@ -15,9 +15,11 @@ namespace LOGI
     public partial class settings : Form
     {
         // Constants for default dirs
-        string ARMADIR;
-        string MODSDIR;
-        string TEAMSPEAKDIR;
+        public string ARMADIR;
+        public string MODSDIR;
+        public string TEAMSPEAKDIR;
+
+        
 
         public settings()
         {
@@ -40,17 +42,17 @@ namespace LOGI
             }
         }
 
-        private string getInstallDir(string program, string key1)
+        public static string getInstallDir(string program, string key1)
         {
             try
             {
                 using (RegistryKey key = Registry.LocalMachine.OpenSubKey(program))
                 {
-                    MessageBox.Show(key.ToString());
+                    //MessageBox.Show(key.ToString());
                     if (key != null)
                     {
                         Object o = key.GetValue(key1);
-                        MessageBox.Show(o.ToString());
+                        //MessageBox.Show(o.ToString());
                         if (o != null)
                         {
                             string registryContent = (Registry.GetValue(key.Name, key1, "")).ToString();
