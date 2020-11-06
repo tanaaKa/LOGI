@@ -19,8 +19,8 @@ namespace LOGI
         public static string ARMADIR = string.Empty;
         public static string MODSDIR = string.Empty;
         public static string TEAMSPEAKDIR = string.Empty;
-        DirectoryChecker directoryChecker = new DirectoryChecker();
-        
+        private DirectoryChecker directoryChecker = new DirectoryChecker();
+
 
         public settings()
         {
@@ -76,36 +76,7 @@ namespace LOGI
         private void settings_Load(object sender, EventArgs e)
         {
             //Get directories from JSON
-            Dictionary<string,string> saveDictionary = directoryChecker.getDirectories();
-            foreach (var entry in saveDictionary)
-            {
-                string something = entry.Key;
-                if (nameof(ARMADIR) == entry.Key && ARMADIR == "")
-                {
-                    ARMADIR = getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main");
-                }
-                else if (nameof(ARMADIR) == entry.Key && ARMADIR != "")
-                {
-                    string bruh = nameof(ARMADIR);
-                    ARMADIR = entry.Value;
-                }
-                if (nameof(MODSDIR) == entry.Key && MODSDIR != "")
-                {
-                    MODSDIR = entry.Value;
-                }
-                else if (nameof(MODSDIR) == entry.Key && MODSDIR == "")
-                {
-                    MODSDIR = getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main") + "\\COALITION";
-                }
-                if (nameof(TEAMSPEAKDIR) == entry.Key && TEAMSPEAKDIR == "")
-                {
-                    TEAMSPEAKDIR = getInstallDir(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TeamSpeak 3 Client", "InstallLocation");
-                }
-                else if (nameof(TEAMSPEAKDIR) == entry.Key && TEAMSPEAKDIR != "")
-                {
-                    TEAMSPEAKDIR = entry.Value;
-                }
-            }
+           
             // On load, set directories automagically from registry
             // ARMADIR = getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main");
             // MODSDIR = ARMADIR + @"\COALITION";
@@ -123,6 +94,10 @@ namespace LOGI
 
             //Set directories
             
+            // Set the textboxes to match the strings found in Form1::LOGI_Load method
+            tbArmaDir.Text = ARMADIR;
+            tbModsDir.Text = MODSDIR;
+            tbTeamspeakDir.Text = TEAMSPEAKDIR;
         }
 
         private void bReportIssue_Click(object sender, EventArgs e)
@@ -134,18 +109,20 @@ namespace LOGI
         {
             // Set dir for arma manually if needed
             tbArmaDir.Text = folderDialog(ARMADIR,nameof(ARMADIR));
+            ARMADIR = tbArmaDir.Text;
         }
 
         private void bSearchModsDir_Click(object sender, EventArgs e)
         {
-            // Set dir for mods manually if needed
             tbModsDir.Text = folderDialog(MODSDIR,nameof(MODSDIR));
+            MODSDIR = tbModsDir.Text;
         }
 
         private void bSearchTeamspeakDir_Click(object sender, EventArgs e)
         {
             // Set dir for teamspeak manually if needed
             tbTeamspeakDir.Text = folderDialog(TEAMSPEAKDIR,nameof(TEAMSPEAKDIR));
+            TEAMSPEAKDIR = tbTeamspeakDir.Text;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
