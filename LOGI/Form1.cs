@@ -17,6 +17,7 @@ namespace LOGI
         string tempFile = Environment.GetEnvironmentVariable("LocalAppData") + @"\LOGI\temp.txt";
         string logFile = Environment.GetEnvironmentVariable("LocalAppData") +  @"\LOGI\log.txt";
         string dir = Environment.GetEnvironmentVariable("LocalAppData") + @"\LOGI";
+        private int imageNumber = 1;
 
         public LOGI()
         {
@@ -54,10 +55,19 @@ namespace LOGI
             }
         }
 
+        private void Slider()
+        {
+            if (imageNumber == 4)
+            {
+                imageNumber = 1;
+            }
+            pbImage.ImageLocation = string.Format(@"img\{0}.jpg", imageNumber);
+            imageNumber++;
+        }
+
         private void bCheck_Click(object sender, EventArgs e)
         {
             bCheck.Enabled = false;
-            settings.getInstallDir();
 
             // Check mods logic here
             // download = checkMods();
@@ -72,6 +82,11 @@ namespace LOGI
         {
             var settingsWindow = new settings();
             settingsWindow.Show();
+        }
+
+        private void sliderTimer_Tick(object sender, EventArgs e)
+        {
+            Slider();
         }
     }
 }

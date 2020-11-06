@@ -35,7 +35,7 @@
             this.bSettings = new System.Windows.Forms.Button();
             this.cbRepo = new System.Windows.Forms.ComboBox();
             this.pbImage = new System.Windows.Forms.PictureBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.sliderTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,13 +79,20 @@
             // 
             // pbImage
             // 
-            this.pbImage.Image = ((System.Drawing.Image)(resources.GetObject("pbImage.Image")));
+            this.pbImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbImage.Image = global::LOGI.Properties.Resources._1;
             this.pbImage.Location = new System.Drawing.Point(12, 12);
             this.pbImage.Name = "pbImage";
             this.pbImage.Size = new System.Drawing.Size(909, 382);
             this.pbImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbImage.TabIndex = 4;
             this.pbImage.TabStop = false;
+            // 
+            // sliderTimer
+            // 
+            this.sliderTimer.Enabled = true;
+            this.sliderTimer.Interval = 10000;
+            this.sliderTimer.Tick += new System.EventHandler(this.sliderTimer_Tick);
             // 
             // LOGI
             // 
@@ -114,7 +121,7 @@
         private System.Windows.Forms.Button bSettings;
         private System.Windows.Forms.ComboBox cbRepo;
         private System.Windows.Forms.PictureBox pbImage;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer sliderTimer;
     }
 }
 
