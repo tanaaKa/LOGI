@@ -69,14 +69,10 @@ namespace LOGI
 
         private void settings_Load(object sender, EventArgs e)
         {
-            // On load, set directories automagically from registry
-            tbArmaDir.Text = getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main");
-            MODSDIR = tbArmaDir.Text + @"\COALITION"; // Set default mods dir if found
+            // Set the textboxes to match the strings found in Form1::LOGI_Load method
+            tbArmaDir.Text = ARMADIR;
             tbModsDir.Text = MODSDIR;
-            // TO-DO:
-            // Teamspeak doesnt read the install directory appropriately for some reason
-            // Might be because it's treated as 32bit - defaults to "Not Found" for now
-            tbTeamspeakDir.Text = getInstallDir(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TeamSpeak 3 Client", "InstallLocation");
+            tbTeamspeakDir.Text = TEAMSPEAKDIR;
         }
 
         private void bReportIssue_Click(object sender, EventArgs e)

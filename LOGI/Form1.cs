@@ -63,6 +63,15 @@ namespace LOGI
             }
         }
 
+        // Method to easily write to our log file
+        public void writeLog(string message)
+        {
+            using (StreamWriter sw = (File.Exists(logFile)) ? File.AppendText(logFile) : File.CreateText(logFile))
+            {
+                sw.WriteLine(message);
+            }
+        }
+
         private void Slider()
         {
             if (imageNumber == 4)
