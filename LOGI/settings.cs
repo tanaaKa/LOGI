@@ -9,31 +9,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LOGI.FileIO;
 
 namespace LOGI
 {
     public partial class settings : Form
     {
         // Constants for default dirs
-        public static string ARMADIR;
-        public static string MODSDIR;
-        public static string TEAMSPEAKDIR;
+        public static string ARMADIR = string.Empty;
+        public static string MODSDIR = string.Empty;
+        public static string TEAMSPEAKDIR = string.Empty;
+        private DirectoryChecker directoryChecker = new DirectoryChecker();
+
 
         public settings()
         {
             InitializeComponent();
+          
         }
 
-        private string folderDialog(string dir)
+        private string folderDialog(string dir,string dirName)
         {
+            
             using (var fbd = new FolderBrowserDialog())
             {
                 DialogResult result = fbd.ShowDialog();
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    dir = fbd.SelectedPath;
-                    return dir;
+                    string tempPath = fbd.SelectedPath;
+                    directoryChecker.directories[dirName] = tempPath;
+                    return tempPath;
                 }
 
                 return "";
@@ -69,6 +75,25 @@ namespace LOGI
 
         private void settings_Load(object sender, EventArgs e)
         {
+            //Get directories from JSON
+           
+            // On load, set directories automagically from registry
+            // ARMADIR = getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main");
+            // MODSDIR = ARMADIR + @"\COALITION";
+            //TEAMSPEAKDIR = getInstallDir(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TeamSpeak 3 Client", "InstallLocation");
+
+
+            tbArmaDir.Text = ARMADIR;
+            // Set default mods dir if found
+            tbModsDir.Text = MODSDIR;
+            // TO-DO:
+            // Teamspeak doesnt read the install directory appropriately for some reason
+            // Might be because it's treated as 32bit - defaults to "Not Found" for now
+           
+            tbTeamspeakDir.Text = TEAMSPEAKDIR;
+
+            //Set directories
+            
             // Set the textboxes to match the strings found in Form1::LOGI_Load method
             tbArmaDir.Text = ARMADIR;
             tbModsDir.Text = MODSDIR;
@@ -83,22 +108,30 @@ namespace LOGI
         private void bSearchArmaDir_Click(object sender, EventArgs e)
         {
             // Set dir for arma manually if needed
-            ARMADIR = folderDialog(ARMADIR).ToString();
-            tbArmaDir.Text = ARMADIR;
+            tbArmaDir.Text = folderDialog(ARMADIR,nameof(ARMADIR));
+            ARMADIR = tbArmaDir.Text;
         }
 
         private void bSearchModsDir_Click(object sender, EventArgs e)
         {
-            // Set dir for mods manually if needed
-            MODSDIR = folderDialog(MODSDIR).ToString();
-            tbModsDir.Text = MODSDIR;
+            tbModsDir.Text = folderDialog(MODSDIR,nameof(MODSDIR));
+            MODSDIR = tbModsDir.Text;
         }
 
         private void bSearchTeamspeakDir_Click(object sender, EventArgs e)
         {
             // Set dir for teamspeak manually if needed
-            TEAMSPEAKDIR = folderDialog(TEAMSPEAKDIR).ToString();
-            tbTeamspeakDir.Text = TEAMSPEAKDIR;
+            tbTeamspeakDir.Text = folderDialog(TEAMSPEAKDIR,nameof(TEAMSPEAKDIR));
+            TEAMSPEAKDIR = tbTeamspeakDir.Text;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            //Save directories to JSON
+            directoryChecker.directories[nameof(ARMADIR)] = ARMADIR;
+            directoryChecker.directories[nameof(MODSDIR)] = MODSDIR;
+            directoryChecker.directories[nameof(TEAMSPEAKDIR)] = TEAMSPEAKDIR;
+            directoryChecker.setDirectories();
         }
     }
 }

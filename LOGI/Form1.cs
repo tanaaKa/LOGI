@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LOGI.FileIO;
 
 namespace LOGI
 {
@@ -19,6 +20,7 @@ namespace LOGI
         string logFile = Environment.GetEnvironmentVariable("LocalAppData") +  @"\LOGI\log.txt";
         string dir = Environment.GetEnvironmentVariable("LocalAppData") + @"\LOGI";
         private int imageNumber = 1;
+        private DirectoryChecker directoryChecker = new DirectoryChecker();
 
         public const string SESSION_REPO_LINK = "https://www.coalitiongroup.net/Repo/";
 
@@ -30,10 +32,38 @@ namespace LOGI
         private void LOGI_Load(object sender, EventArgs e)
         {
             // Get install directories on load
-            settings.ARMADIR = settings.getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main");
-            settings.MODSDIR = settings.ARMADIR + @"\COALITION";
-            settings.TEAMSPEAKDIR = settings.getInstallDir(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TeamSpeak 3 Client", "InstallLocation");
-
+           // settings.ARMADIR = settings.getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main");
+           // settings.MODSDIR = settings.ARMADIR + @"\COALITION";
+           // settings.TEAMSPEAKDIR = settings.getInstallDir(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TeamSpeak 3 Client", "InstallLocation");
+            Dictionary<string, string> saveDictionary = directoryChecker.getDirectories();
+            foreach (var entry in saveDictionary)
+            {
+                string something = entry.Key;
+                if (nameof(settings.ARMADIR) == entry.Key && entry.Value == "")
+                {
+                    settings.ARMADIR = settings.getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main");
+                }
+                else if (nameof(settings.ARMADIR) == entry.Key && entry.Value != "")
+                {
+                    settings.ARMADIR = entry.Value;
+                }
+                if (nameof(settings.MODSDIR) == entry.Key && entry.Value != "")
+                {
+                    settings.MODSDIR = entry.Value;
+                }
+                else if (nameof(settings.MODSDIR) == entry.Key && entry.Value == "")
+                {
+                    settings.MODSDIR = settings.getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main") + "\\COALITION";
+                }
+                if (nameof(settings.TEAMSPEAKDIR) == entry.Key && entry.Value == "")
+                {
+                    settings.TEAMSPEAKDIR = settings.getInstallDir(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TeamSpeak 3 Client", "InstallLocation");
+                }
+                else if (nameof(settings.TEAMSPEAKDIR) == entry.Key && entry.Value != "")
+                {
+                    settings.TEAMSPEAKDIR = entry.Value;
+                }
+            }
             // Defaults
             bCheck.Text = "CHECK MODS";
             cbRepo.Text = "Session Repo";
@@ -137,6 +167,11 @@ namespace LOGI
         private void sliderTimer_Tick(object sender, EventArgs e)
         {
             Slider();
+        }
+
+        private void pbImage_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
