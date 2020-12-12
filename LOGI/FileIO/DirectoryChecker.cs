@@ -35,5 +35,11 @@ namespace LOGI.FileIO
                 serializer.Serialize(file,directories);
             }
         }
+
+        public string[] getSubDirectories(string path)
+        {
+            string[] subDirectoryEntries = Directory.GetDirectories(path);
+            return subDirectoryEntries;
+        }
     }
 }

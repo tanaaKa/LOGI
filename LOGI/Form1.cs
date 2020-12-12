@@ -6,8 +6,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using LOGI.FileIO;
@@ -16,8 +18,9 @@ namespace LOGI
 {
     public partial class LOGI : Form
     {
+        private List<Task> tasks = new List<Task>();
         string tempFile = Environment.GetEnvironmentVariable("LocalAppData") + @"\LOGI\temp.txt";
-        string logFile = Environment.GetEnvironmentVariable("LocalAppData") +  @"\LOGI\log.txt";
+        string logFile = Environment.GetEnvironmentVariable("LocalAppData") + @"\LOGI\log.txt";
         string dir = Environment.GetEnvironmentVariable("LocalAppData") + @"\LOGI";
         private int imageNumber = 1;
         private DirectoryChecker directoryChecker = new DirectoryChecker();
@@ -32,9 +35,9 @@ namespace LOGI
         private void LOGI_Load(object sender, EventArgs e)
         {
             // Get install directories on load
-           // settings.ARMADIR = settings.getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main");
-           // settings.MODSDIR = settings.ARMADIR + @"\COALITION";
-           // settings.TEAMSPEAKDIR = settings.getInstallDir(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TeamSpeak 3 Client", "InstallLocation");
+            // settings.ARMADIR = settings.getInstallDir(@"SOFTWARE\WOW6432Node\Bohemia Interactive\arma 3", "main");
+            // settings.MODSDIR = settings.ARMADIR + @"\COALITION";
+            // settings.TEAMSPEAKDIR = settings.getInstallDir(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TeamSpeak 3 Client", "InstallLocation");
             Dictionary<string, string> saveDictionary = directoryChecker.getDirectories();
             foreach (var entry in saveDictionary)
             {
@@ -126,7 +129,7 @@ namespace LOGI
             {
                 //Get Repo online
                 string repoContent = new System.Net.WebClient().DownloadString(SESSION_REPO_LINK);
-                Regex rgx = new Regex(@"\"+"@.*"+"\"");
+                Regex rgx = new Regex(@"\" + "@.*" + "\"");
                 foreach (Match match in rgx.Matches(repoContent))
                 {
                     //Console.WriteLine("Found '{0}' at position {1}", match.Value, match.Index);
@@ -150,12 +153,73 @@ namespace LOGI
             bCheck.Enabled = false;
             Console.WriteLine(Mods_Req_Update());
             // Check mods logic here
-            // download = checkMods();
+            bool download = checkMods();
             // if true, then:
             // bCheck.Text = "DOWNLOAD MODS";
             // else:
             // bCheck.Text = "PLAY";
             // serverBrowser();
+        }
+
+        private bool checkMods()
+        {
+            Dictionary<string, string> hashes = null;
+            string[] directories = directoryChecker.getSubDirectories(settings.ARMADIR);
+            tasks.Add(Task.Run(() => //Give it a thread
+            {
+                hashes = generateMD5Hashes(directories);
+            }));
+            Task t = Task.WhenAll(tasks.ToArray());
+            try
+            {
+                t.Wait();
+            }
+            catch { }
+            if(t.Status == TaskStatus.RanToCompletion)
+            {
+                //TODO compare client hashes with server hashes
+                //Make multi-threaded for better performance
+            }
+            return true;
+        }
+
+        private Dictionary<string, string> generateMD5Hashes(string[] directories)
+        {
+            Dictionary<string, string> _hashes = new Dictionary<string, string>();
+            foreach (var directory in directories)
+            {
+                string[] splitDirectory = directory.Split('\\'); 
+                string mod = splitDirectory.Last(); //Get directory name
+                string hash = generateDirectoryMD5(directory); //Generate directory hash
+                _hashes.Add(mod, hash);
+            }
+
+            return _hashes;
+        }
+
+        private string generateDirectoryMD5(string path)
+        {
+            var filePaths = Directory.GetFiles(path, "*", SearchOption.AllDirectories).OrderBy(p => p).ToArray();
+
+            using (var md5 = MD5.Create())
+            {
+                foreach (var filePath in filePaths)
+                {
+                    // hash path
+                    byte[] pathBytes = Encoding.UTF8.GetBytes(filePath);
+                    md5.TransformBlock(pathBytes, 0, pathBytes.Length, pathBytes, 0);
+
+                    // hash contents
+                    byte[] contentBytes = File.ReadAllBytes(filePath);
+
+                    md5.TransformBlock(contentBytes, 0, contentBytes.Length, contentBytes, 0);
+                }
+
+                //Handles empty filePaths case
+                md5.TransformFinalBlock(new byte[0], 0, 0);
+
+                return BitConverter.ToString(md5.Hash).Replace("-", "").ToLower();
+            }
         }
 
         private void bSettings_Click(object sender, EventArgs e)
